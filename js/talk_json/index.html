@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //面向对象思想
+        //表现力的JSON 对象字面量
+        //let 变量 关键字 保留字
+        //key:value,
+        //typeof = object
+        let zzp = {
+            name: '郑志鹏',//字符串 String
+            hometown:'上饶',
+            age:18,//number 数值类型 不适合计算
+            sex:'男',
+            hobbies:['篮球','lol'],//object 数组 
+            isSingle:true,
+            job: null,//空值
+            sendFlower: function(target){
+                target.reciveFlower(zzp);
+            }
+
+        }
+        let a;
+        let xm = {
+            xq:30,//心情值
+            name:'小美',
+            hometown:'赣州',
+            reciveFlower: function(sender){
+                console.log('小美收到了'+ sender.name+'的花');
+                if(this.xq < 80){
+                    console.log('不约，我们不合适');
+                }else{
+                    console.log('硕果走一波!!');
+                }
+            }
+        }
+        let xh = {
+            naem:'小红',
+            hometown:'上饶',
+            reciveFlower: function(sender){
+                setTimeout(function(){
+                    xm.xq = 90;
+                    xm.reciveFlower(sender);
+                },3000);
+                // console.log('小红收到了'+ sender.name+'的花',);
+                // xm.reciveFlower(sender);
+                //    if(sender.name === '郑志鹏'){
+                // console.log('让我们在一起吧');
+                // }
+                
+
+            }
+        }
+    </script>
+</body>
+</html>

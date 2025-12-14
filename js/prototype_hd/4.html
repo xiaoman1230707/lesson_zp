@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function extent(Child,Parent){
+            var F = function(){};//函数表达式，但开销不大,中介
+            F.prototype = Parent.prototype;//原型链的概念
+            Child.prototype = new F();//实例的修改，不会修改原型的对象;
+            Child.prototype.constructor = Child;//修改构造函数指向
+        }
+       function Animal(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        Animal.prototype.species = '动物';
+        function Cat(name,age,color){
+            //空对象{} <- this
+            //构造函数式继承
+            //手动制定 
+            Animal.call(this,name,age);
+            this.color = color;
+            //Animal.apply(this,[name,age]);
+            console.log(this,'////');
+        }
+        extent(Animal,Cat);
+        Cat.prototype.eat = function(){
+            console.log(this.name,'在吃');
+        }
+        const cat = new Cat('加菲猫',2,'黄色');
+        console.log(cat.species);
+        cat.eat();
+    </script>
+</body>
+</html>

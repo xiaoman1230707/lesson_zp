@@ -1,0 +1,17 @@
+/* 从零开始，让所有用户都一样 */
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body,html{
+      width: 100%;
+      height: 100%;
+}
+
+html{
+    font-size: 10px;
+    background: url('./ych.jpg') bottom center;
+    background-size: cover;
+
+}

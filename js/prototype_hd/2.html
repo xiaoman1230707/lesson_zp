@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>利用空对象作为中介</title>
+</head>
+<body>
+    <script>
+        function Animal(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        Animal.prototype.species = '动物';
+         function Cat(name,age,color){
+            //空对象{} <- this
+            //构造函数式继承
+            //手动制定 
+            Animal.call(this,name,age);
+            this.color = color;
+            //Animal.apply(this,[name,age]);
+            console.log(this,'////');
+        }
+        //利用空对象作为中介
+        var F = function(){}; //空的函数
+        F.prototype = Animal.prototype;//我不改 F 
+        Cat.prototype = new F();//空对象 F.prototype 独立的对象
+        var f = new F();
+        Cat.prototype = f;
+        Cat.prototype.constructor = Cat;//会修改到实例的constructor
+        console.log(Animal.prototype.constructor);
+        var cat = new Cat('加菲猫',2,'黄色');
+        console.log(cat.__proto__.__proto__);
+        //构造函数进来
+        //继承
+        function extent(Child,Parent){
+            //引入一个空对象,Function 来实例化
+            //不走Object，没必要把祖师爷请出来
+            //原型链的概念
+            //目的地是 Animal.prototype
+            //出发地Cat.prototype
+            //修改Cat。prototype.constructor 指向 Cat
+            //只会修改f
+            //f.__proto__ = Animal.prototype被保护起来了
+        }
+    </script>
+</body>
+</html>

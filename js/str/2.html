@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='tools'></div>
+    <script>
+        const tools = [
+            {
+                id:1,
+                text:'学习es6'
+            },
+            {
+                id:2,
+                text:'通读你不知道的javascript'
+            }
+        ]
+        //dom编程
+        const toolsEl = document.getElementById('tools');
+        console.log(toolsEl,Object.prototype.toString.call(toolsEl));
+        //template String 支持换行 在DOM html表达中游刃有余
+        toolsEl.innerHTML = `
+        <ul>
+            ${//占位符
+              //js运行区域
+              //map 迭代数组的每一项 返回值 并返回一个新的数组
+            tools.map(item => `
+            <li>${item.text}</li>
+            `).join('')
+            }
+        </ul>
+        `
+    </script>
+</body>
+</html>
