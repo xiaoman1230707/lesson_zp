@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>异步 Async</title>
+</head>
+<body>
+    <script>
+        //代码执行顺序
+        //代码编写顺序
+        console.log(10);
+        //定时器
+        //等？ 同步代码
+        //js不等，单线程的脚本语言
+        //相应用户的事件,滚动
+        //代码的执行是线程负责
+        //比较简单,单线程
+        //setTimeout 是异步代码 放到event loop中
+        setTimeout(() => {
+            console.log(20);
+        }, 1000);
+        console.log(30);
+        //10 30 20
+    </script>
+</body>
+</html>
