@@ -1,4 +1,4 @@
-//严格模式(StrictMode)执行两次 console.log(count)
+//严格模式(StrictMode) 执行两次 console.log(count)
 //一次执行 一次测试 review代码
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -8,5 +8,7 @@ import './index.styl'//全局样式 stylus
 import App from './App.jsx'//引入了组件
 
 createRoot(document.getElementById('root')).render(
-  <App />,//jsx 函数组件的名字 类html标签 自定义组件
+  //<StrictMode>
+    <App />,//jsx 函数组件的名字 类html标签 自定义组件
+  //</StrictMode>
 )
