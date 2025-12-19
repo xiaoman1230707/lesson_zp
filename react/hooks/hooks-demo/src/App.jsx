@@ -16,21 +16,21 @@ async function queryDate(){
 export default function App(){
   const [num,setNum] = useState(0);
 
-//   useEffect(()=>{
-//     console.log('xxxx')//执行一次
-//     //挂载后执行,类似vue生命周期onMounted
-//     //更新时也执行,类似vue中的onUpdated
-//     queryDate().then(data=>{
-//         setNum(data)
-//     })
-//   },[])//依赖项为空 谁也不依赖
-//   useEffect(()=>{
-//     console.log('zzz')//只要状态发生改变就执行
-//   },[num])
-//   useEffect(()=>{
-//     console.log('ddd')
-//   })//不传依赖项 每次渲染后和状态更新时都执行
-//     console.log('yyy')//只要状态发生改变就执行
+  useEffect(()=>{
+    console.log('xxxx')//执行一次
+    //挂载后执行,类似vue生命周期onMounted
+    //更新时也执行,类似vue中的onUpdated
+    queryDate().then(data=>{
+        setNum(data)
+    })
+  },[])//依赖项为空 谁也不依赖
+  useEffect(()=>{
+    console.log('zzz')//只要状态发生改变就执行
+  },[num])
+  useEffect(()=>{
+    console.log('ddd')
+  })//不传依赖项 每次渲染后和状态更新时都执行
+    console.log('yyy')//只要状态发生改变就执行
     useEffect(()=>{
         console.log('effect')
         //每次都在新建定时器
