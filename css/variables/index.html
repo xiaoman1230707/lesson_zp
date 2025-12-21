@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css4 变量</title>
+    <style>
+        /* 选中根元素 html 
+          声明变量 css
+        */
+        :root{
+            /* 很多地方都能用  全局变量*/
+            --base:#ffc600;
+            --spacing:10px;
+            --blur:10px;
+        }
+        img{
+            padding:var(--spacing);
+            background: var(--base);
+            filter:blur(var(--blur));
+        }
+        .controls{
+            padding:var(--spacing);
+        }
+        .hl{
+            color: var(--base);
+        }
+    </style>
+</head>
+<body>
+    <h2>Updata Css Variable with <span class="hl">JS</span></h2>
+    <div class="controls">
+        <label for="spacing">Spacing:</label>
+        <!-- html5 新特性表单元素 -->
+        <input type="range" id="spacing" name="spacing"
+        min="10" max="200" value="10" 
+        data-sizing="px">
+        <label for="blur">Blur:</label>
+        <input type="range" id="blur" name="blur"
+        min="0" max="25" value="10"
+        data-sizing="px">
+
+        <label for="base">Base Color:</label>
+        <input type="color" id="base" name="base" value="#ffc600">
+    </div>
+    <img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.YabQxfmTp8cB1vay-fvRsgHaEJ?w=334&h=187&c=7&r=0&o=7&cb=ucfimg2&dpr=1.5&pid=1.7&rm=3&ucfimg=1" alt="">
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+        inputs.forEach(input => input.addEventListener('change',handleUpdate))
+        function handleUpdate(){
+            //this 指向？ 时间处理函数时，指向事件发生的元素
+            //dataset-sizing 
+            const stuffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`,this.value + stuffix)
+        }
+    </script>
+</body>
+</html>

@@ -79,7 +79,7 @@
     const patToken = import.meta.env.VITE_PAT_TOKEN
     const uploadUrl = 'https://api.coze.cn/v1/files/upload'
     const workflowUrl = 'https://api.coze.cn/v1/workflow/run'
-    const workflow_id = '7584046287034515490'//7584046136927862794
+    const workflow_id = '7586136877033324607'
     const uniform_number = ref(10)//队服编号
     const uniform_color = ref('red')//队服颜色
     const position = ref(0)//位置
@@ -117,14 +117,16 @@
             parameters
           })
         })
-        const ret = await res.json.parse();
-        if(ret.code !== 0){//如果出错了
-          status.value = ret.msg;//msg 错误消息
-          return
-        }
-        console.log(ret.data);
-        status.value =""
-       imgUrl.value = ret.data.data//更新响应式对象
+         const ret = await res.json();
+    console.log(ret);
+    if(ret.code !== 0) { // 如果出错了
+      status.value = ret.msg; // msg 报错信息
+      return; 
+    }
+    const data =JSON.parse(ret.data);
+    console.log(data);
+    status.value = '';
+    imgUrl.value = data.data;
     }
     //先上传到coze服务器
     const uploadFile = async ()=>{
