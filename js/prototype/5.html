@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Person(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        Person.prototype.species = '人';
+        Person.prototype.sayHello = function(){
+            console.log(`我是${this.name}，我今年${this.age}岁`);
+        }
+        var su = new Person('舒老板',18);
+        // 原型对象是独立于实例之外的
+        su.species = 'LOL达人';//实例上设置属性，不是设置在原型上
+        // 如果实例上有属性，就不会去原型上找
+        console.log(su,su.__proto__,su.species);
+        //怎么有呢？toString
+        console.log(su.toString())
+        console.log(su.__proto__.__proto__);
+    </script>
+</body>
+</html>

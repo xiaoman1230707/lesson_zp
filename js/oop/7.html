@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Animal(){
+            this.species = '动物'
+
+        }
+        Animal.prototype = {
+            sayHi:()=>{
+                console.log('hi')
+            }
+        }
+        function Cat(name,color){
+            Animal.apply(this);
+            this.name = name;
+            this.color = color;
+        }
+        Cat.prototype = new Animal();
+        const a = new Cat('小白猫','白色')
+        a.sayHi()
+        // console.log(a,a.__proto__)
+    </script>
+</body>
+</html>

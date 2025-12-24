@@ -22,13 +22,17 @@
             Animal.call(this,name,age);
             this.color = color;
             //Animal.apply(this,[name,age]);
-            console.log(this,'////');
+            // console.log(this,'////');
         }
-        Cat.prototype = new Animal();
-        Cat.prototype.constructor = Cat;
+        // Cat.prototype = new Animal();//prototype模式
+        // const cat = new Cat('加菲猫',2,'黄色');
+        // console.log(cat.constructor);//cat实例的构造函数变为Animal的构造函数
+        Cat.prototype = Animal.prototype;//直接继承prototype
+        Cat.prototype.constructor = Cat;//修改原型上的构造函数
         const cat = new Cat('加菲猫',2,'黄色');
-        console.log(cat.constructor,cat.species);
-        console.log(Animal.prototype.constructor);
+        console.log(cat.constructor,cat.species);//继承到了Animal的属性且构造函数不变
+        console.log(Animal.prototype.constructor);//但是Animal原型的构造函数却指向了Cat
+       //容易污染原型链
     </script>
 </body>
 </html>

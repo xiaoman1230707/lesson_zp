@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // es5没有class 抽象一个类的模版(属性 方法)
+        // 属性 构建函数
+        function Person(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        
+        Person.prototype = {
+            speci:'人',
+            sayHello:()=>{
+                console.log(`我是${this.name}，我今年${this.age}岁`);
+            }
+        }
+        //es6中 class 是语法糖 只是一种更方便的写法
+        // class Person {
+        //     constructor(name,age){
+        //         this.name = name;
+        //         this.age = age;
+        //     }
+        //     sayHello(){
+        //         console.log(`我是${this.name}，我今年${this.age}岁`);
+        //     }
+        // }
+        const su = new Person('舒老板',18);//实例
+        var obj = new Object();
+        console.log(su.__proto__ == Person.prototype);
+        console.log(Person.prototype.constructor == Person,Person.prototype.constructor);
+        console.log(Object.getPrototypeOf(su) == Person.prototype);
+        console.log(obj.__proto__.constructor);
+    </script>
+</body>
+</html>

@@ -12,25 +12,21 @@
             this.age = age;
         }
         Animal.prototype.species = '动物';
-         function Cat(name,age,color){
-            //空对象{} <- this
-            //构造函数式继承
-            //手动制定 
+         function Cat(name,age,color){ 
             Animal.call(this,name,age);
             this.color = color;
-            //Animal.apply(this,[name,age]);
-            console.log(this,'////');
         }
         //利用空对象作为中介
-        var F = function(){}; //空的函数
+        var F = function(){}; //空的函数 和空的obj原型不一样
         F.prototype = Animal.prototype;//我不改 F 
         Cat.prototype = new F();//空对象 F.prototype 独立的对象
         var f = new F();
         Cat.prototype = f;
-        Cat.prototype.constructor = Cat;//会修改到实例的constructor
-        console.log(Animal.prototype.constructor);
+        Cat.prototype.constructor = Cat;//改的是F实例的constructor
+        console.log(Animal.prototype.constructor);//不会改变，还是Animal的构造函数
         var cat = new Cat('加菲猫',2,'黄色');
-        console.log(cat.__proto__.__proto__);
+        console.log(cat.__proto__);//指向F实例
+        console.log(cat.__proto__.__proto__);//指向Animal.prototype
         //构造函数进来
         //继承
         function extent(Child,Parent){
@@ -39,7 +35,7 @@
             //原型链的概念
             //目的地是 Animal.prototype
             //出发地Cat.prototype
-            //修改Cat。prototype.constructor 指向 Cat
+            //修改Cat.prototype.constructor 指向 Cat
             //只会修改f
             //f.__proto__ = Animal.prototype被保护起来了
         }

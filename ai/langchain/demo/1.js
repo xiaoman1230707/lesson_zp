@@ -18,10 +18,17 @@ const promptStr = await prompt.format({
     question:'什么是闭包'
 })
 
-const promp2 = await prompt.format({
-    role:'面试官',
-    limit:50,
-    question:'什么是闭包'
+// const promp2 = await prompt.format({
+//     role:'后端面试官',
+//     limit:50,
+//     question:'什么是MVC'
+// })
+// console.log(promptStr);
+
+const modal = new ChatDeepSeek({
+    model:'deepseek-reasoner',
+    temperature:0.7,
 })
 
-console.log(promptStr);
+const res  =await modal.invoke(promptStr)
+console.log(res.content);
