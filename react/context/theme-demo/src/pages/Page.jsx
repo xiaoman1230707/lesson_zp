@@ -8,7 +8,6 @@ export default function Page(){
         <>
         <div style={{padding: 24}}>
             <Header />
-            {/* <Content /> */}
         </div>
         </>
     )
