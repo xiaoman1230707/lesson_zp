@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<body>
+
+    <input type="text" id="undebounce" />
+    <br>
+    <input type="text" id="debounce" />
+    <br>
+    <input type="text" id="throttle" />
+
+  
+    <script>
+        function ajax(content){
+            console.log('ajax request',content)
+        }
+        //高阶函数 参数或者返回值(闭包)是函数 (函数就是对象) 
+        function debounce(fn,delay){
+            var id;//定时器id 自由变量
+            return function(...args){
+                if(id) clearTimeout(id);//清除之前的定时器
+                var that = this;
+                id = setTimeout(()=>{
+                    fn.apply(that,args);//执行函数
+                },delay)
+            }
+            // return (...args) => { // 使用箭头函数，自动继承外层 this
+            //     clearTimeout(id);
+            //     id = setTimeout(() => fn.apply(this, args), delay);
+            // };
+        }
+        // 节流 fn执行的任务
+        function throttle(fn,delay){
+           let last,defertimer;
+            return function(...args){
+                let that = this;//this丢失
+                let now = + new Date();//类型转换,毫秒数
+                //上次执行过 还没到执行时间
+                if(last && now < last + delay){
+                    clearTimeout(defertimer);
+                    defertimer = setTimeout(()=>{
+                        last = now;
+                        fn.apply(that,args);
+                    },delay);
+                }else{
+                    last = now;
+                    fn.apply(that,args);
+                }
+           }
+        }
+
+
+        const inputa = document.getElementById('undebounce');
+        const inputb = document.getElementById('debounce');
+        const inputc = document.getElementById('throttle');
+
+        let debounceAjax = debounce(ajax,1000);
+        let throttleAjax = throttle(ajax, 500);
+
+        inputc.addEventListener('keyup', function(e) {
+            throttleAjax(e.target.value)
+        })
+        //频繁触发
+        inputa.addEventListener('keyup',function(e){
+            ajax(e.target.value);//蛮复杂
+        });
+        inputb.addEventListener('keyup',function(e){
+            debounceAjax(e.target.value);
+        });
+      
+    </script>
+</body>
+</html>

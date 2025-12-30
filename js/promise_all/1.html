@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //p是Promise实例
+        const p = new Promise((resolve,reject) => {
+            //resolve Promise 成功
+            // p状态由 pending 变为 fulfilled
+            // 可以接受参数 传递给 then 方法
+            //reject Promise 失败
+            // p状态由 pending 变为 rejected
+
+            // executor 执行器 立即执行
+            console.log('executor 执行器 立即执行');
+            // 异步任务 耗时
+            setTimeout(() => {
+                resolve('成功')
+                // reject('失败')
+            }, 2000);
+        })
+        console.log(p,'/////')
+        // console.log(p.__proto__);
+        // console.log(p.__proto__ == Promise.prototype);
+        p.then(res =>{
+            console.log(res);
+        }).catch(err =>{
+            console.log(err);
+        }).finally(() =>{
+            console.log('finally');
+        })
+    </script>
+</body>
+</html>
