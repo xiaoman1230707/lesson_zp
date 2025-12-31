@@ -1,0 +1,10 @@
+//栈内存中 存放调用栈
+//体积小 
+function foo(){
+    var a = 1;// 赋值
+    var b = a;// 拷贝
+    a= 2;
+    console.log(a,b);// 2 1
+
+}
+foo();

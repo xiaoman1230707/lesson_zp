@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function foo(){
+    var maname = '极客时间';
+    let test1 = 1;
+    var innerBar = {
+        getname:  function(){
+        console.log(test1);
+        return myname
+    }
+    ,
+    setname: function(newname){
+        myname = newname;
+    }
+}
+return innerBar;//闭包形成的条件 函数嵌套函数
+
+        }
+        var bar = foo();
+        bar.setname('极客帮');
+        bar.getname();
+        console.log(bar.getname());
+    </script>
+</body>
+</html>
