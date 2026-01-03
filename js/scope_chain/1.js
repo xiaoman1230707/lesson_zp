@@ -6,8 +6,4 @@ function foo(){
     bar();//运行时
 }
 var myname = '极客时间'
-foo();
-
-/*
-
-*/
+foo();//极客时间
