@@ -65,3 +65,19 @@
 - 移动端时代，单页应用 react-router-dom html5 history 模式
   前端路由
   路由改变后，页面不会全部重新刷新，前端收到一个事件，将其配的新路由显示在页面上
+
+## Typescript
+Javascript 超级 , 强类型静态语言
+- 安装ts
+  npm install typescript -g
+- ts会编译成为js运行 
+- ts 优点
+  - 静态类型，可以约定类型
+  - 边写边检测bug
+  - 编译时检查类型错误
+  - 代码建议，文档查看都非常方便，直接显示类型
+  - 没有使用变量的垃圾代码会提示未使用(console.log())
+    重构时，或使用别人代码时，会提示未使用的变量，及时删除。
+    可以提供干净的代码
+
+### typescript 实战 todo
