@@ -197,3 +197,25 @@ CREATE TABLE posts (
   ('6', '张三', '$2b$10$CsO/ykedPpuxqUETBZTYm.F2U4TXDdo01rLmoRPwjKBv3pIL5pnWq');
 ```
 
+## nestjs
+### express 极简框架
+nestjs 企业级开发，基于typescript ，采用模块架构和依赖注入 ，
+旨在构建高效可拓展且易于维护的企业级后端应用 
+- 安装
+  npm i -g @nestjs/cli
+- 创建项目
+  nest new nest-test-demo
+
+### nestjs 理解
+- 工厂模式 
+- main.ts 入口文件
+- Module
+  app.module.ts 根模块
+
+### http 请求动作
+语义化 restful 一切皆资源
+Method + url 定义方式
+- GET/POST
+- PUT 上传(更新) 
+- DELETE 删除
+- PATCH 局部更新 nickname password 
