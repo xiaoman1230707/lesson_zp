@@ -67,7 +67,7 @@
   路由改变后，页面不会全部重新刷新，前端收到一个事件，将其配的新路由显示在页面上
 
 ## Typescript
-Javascript 超级 , 强类型静态语言
+Javascript 超集 , 强类型静态语言
 - 安装ts
   npm install typescript -g
 - ts会编译成为js运行 
