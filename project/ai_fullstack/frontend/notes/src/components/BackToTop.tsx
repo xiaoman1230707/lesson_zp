@@ -4,6 +4,7 @@ import {
 } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowUp} from 'lucide-react';
+import { throttle } from '@/utils';
 
 interface BackToTopProps {
     // 滚动阈值 超过多少像素后显示按钮
@@ -12,12 +13,23 @@ interface BackToTopProps {
 
 const BackToTop:React.FC<BackToTopProps> = ({threshold=100})=>{
     const [isVisible,setIsVisible] = useState<boolean>(false);
-    const toggleVisibility =()=>{
-        setIsVisible(window.scrollY>threshold)
+    const scrollTop = ()=>{
+        window.scrollTo({
+            top:0,
+            behavior:'smooth'
+        })
     }
     useEffect(()=>{
-        window.addEventListener('scroll',toggleVisibility)
-    },[threshold])
+        const toggleVisibility =()=>{
+        setIsVisible(window.scrollY>threshold)
+    };
+    const thtottled_func = throttle(toggleVisibility,200);
+        window.addEventListener('scroll',thtottled_func);
+        return ()=> window.removeEventListener('scroll',thtottled_func);
+        
+    },[threshold]) 
+
+
     if(!isVisible){
         return null
     }
@@ -25,7 +37,7 @@ const BackToTop:React.FC<BackToTopProps> = ({threshold=100})=>{
         <Button 
         variant="outline"
         size="icon"
-        onClick={()=>{}}
+        onClick={scrollTop}
         className='fixed bottom-6 right-6 rounded-full 
         shadow-lg hover:shadow-xl z-50'
         >

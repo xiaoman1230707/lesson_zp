@@ -11,8 +11,10 @@ interface UserState{
 }
 
 export const useUserStore = create<UserState>((set) => ({
-        isLogin:false,
+        isLogin:true,
         user:null
 })
 )
+
+
 

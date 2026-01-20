@@ -275,3 +275,95 @@ Method + url 定义方式
 - fallback 可以自定义加载组件
 - 路由守卫
   - user store isLogin 
+  
+### BackToTop 组件
+- 通用组件
+- 自由的状态 isVisible 是否显示
+- 随着监听 onscroll事件 ，有判断滚动条阈值
+- scroll 事件 频繁触发 ，使用节流函数 ，避免性能问题 
+  节流函数 utils 工具函数 复用 
+- 组件卸载时 ，移除事件监听 ，避免内存泄漏
+
+### 幻灯片组件 slides
+- shadcn 提供了 Carousel,CarouselContent,CarouselItem 
+  一组组件，层次结构
+- 自动播放功能 作为插件引入，shadcn 简单性能好，定制型更好
+  useRef 持久化可变的对象 保存插件实例，避免每次渲染都创建新实例
+  plugins=[] 
+- api 向外暴露Carousel 的各种功能
+  selectedIndex 私有状态
+  api onSelect 方法改变值
+     部分	                    含义
+     api	                 轮播实例的控制接口（Application Programming Interface）
+     on(event,  callback)	 注册一个事件监听器：当 event 发生时，执行 callback
+     'select'	             事件名称，表示“当前选中的 slide 发生了变化”
+     onSelect	             回调函数，事件触发时要执行的操
+     'select' 事件会在 用户滑动结束、自动播放切换、编程式跳转（如 moveToIdx）完成 snap 对齐后 触发。
+      也就是说：
+      用户手指松开
+      动画停稳
+      当前显示的是第几个 slide 已确定
+      此时才触发 'select'，并通知外部：“我已经选好了新的 slide”。
+- 指示点
+  循环输出
+  动态类名
+- css
+  - transition-all 
+  - gradient 线性渐变，去带图片(渐变色) 做背景
+    性能优化 如果用图片做背景的话 会让http下载的开销变大。而使用gradient 减少http并发数
+
+### store
+- user 全局共享
+- 每页面级别的组件都有自己的独立的store
+  组件UI 数据分离
+
+### Post List 
+- 数据怎么提供呢？
+  - 真实数据在后端 
+  - axios 请求后端接口
+  - 前端要等待后端做完接口吗？不能等，前后端分离的基础上，
+    前端可以自行解决数据需求。
+    mock 伪造一下 
+    在api接口文档可以先找自己的mock接口要假数据
+    GET /api/posts?page=1&limit=10  返回内容
+    {
+      status:200,
+      data:{
+        list:Post[]
+      }
+    }
+    只要切换到后端真正的地址，无缝对接
+
+### mockjs
+- 前端接口伪造，开发时候用，上线前切换为后端接口。这样就不耽误开发
+- vite 启动 mock  前后端确立接口开发文档
+- pnpm i vite-plugin-mock -D
+- pnpm i mockjs -D
+  - 配置vite.config.ts
+    plugins: [
+      react(),
+      tailwindcss(),
+      viteMockServe({
+        mockPath:'mock'
+      })
+    ],
+- 配置mock的posts.js文件
+- 这样就能在前端调用 mock的假接口假数据了 
+
+### posts mock
+- mockjs语法
+  mockpath
+  export default {
+    {
+      url:'',
+      method:'',
+      response:()=>{}
+    }
+  }
+- mockjs 随机数据功能 @
+- 分页机制
+  - page,limit parseInt 从路径中提取参数为 数值 
+  - start,end,total,totalPages 计算分页范围
+  - slice 分页数据 
+  - pagination 分页信息
+

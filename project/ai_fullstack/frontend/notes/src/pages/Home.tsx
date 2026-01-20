@@ -1,12 +1,23 @@
 import Header from '@/components/Header';
 import { Card, CardHeader, CardTitle,CardContent } from '@/components/ui/card';
+import SlideShow,{type SlideData} from '@/components/SildeShow';
+import { useHomeStore } from '@/store/home';
+import {
+  useEffect
+} from 'react';
 
 export default function Home() {
+  const {banners,posts,loadMore} = useHomeStore();
+
+  useEffect(()=>{
+    loadMore();
+    },[]);
   return (
     <>
      <Header title='首页' showBackBtn={true} /> 
 
      <div className='p-4 space-y-4'>
+      <SlideShow slides={banners} />
       <Card>
         <CardHeader>
           <CardTitle>

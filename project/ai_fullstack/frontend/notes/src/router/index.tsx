@@ -32,7 +32,6 @@ export default function RouterConfig(
                         <Route path='order' element={<Order />} />
                         <Route path='chat' element={<Chat />} />
                         <Route path='mine' element={<Mine />} />
-
                     </Route>
                 </Routes>
             </Suspense>
