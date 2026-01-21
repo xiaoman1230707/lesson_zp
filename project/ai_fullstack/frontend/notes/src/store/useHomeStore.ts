@@ -26,7 +26,7 @@ export const useHomeStore = create<HomeState>((set)=>({
       image: "https://img.36krcdn.com/hsossms/20260114/v2_8dc528b02ded4f73b29b7c1019f8963a@5091053@ai_oswg1137571oswg1053oswg495_img_png~tplv-1marlgjv7f-ai-v3:600:400:600:400:q70.jpg?x-oss-process=image/format,webp",
   }],
   posts:[],
-  loadMore: async ()=>{
+  loadMore: async ()=>{ 
     const {items} = await fetchPosts();
     console.log(items)      
   }
