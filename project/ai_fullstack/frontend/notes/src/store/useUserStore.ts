@@ -1,20 +1,41 @@
-import { 
-    create// 创建store实例
- } from 'zustand';
-import type { User } from '@/types';
+// localstorage 
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import {
+  doLogin
+} from '@/api/user'
+import type { User } from '@/types/index'
+import type { Credentail } from '@/types/index';
 
-interface UserState{
-    isLogin:boolean;
-    user:User | null;// 联合类型
-    // login:()=>{};
-    // logout:()=>{};
+interface UserState {
+  token: string;
+  user: User | null;
+  isLogin: boolean;
+  login: (credentials: Credentail) => Promise<void>;
 }
 
-export const useUserStore = create<UserState>((set) => ({
-        isLogin:true,
-        user:null
-})
+// 高阶函数 柯里化
+export const useUserStore = create<UserState>()(
+  persist((set) => ({ // state 对象
+    token: "",
+    user: null,
+    isLogin: false,
+    login: async ({ name, password }) => {
+      const data = await doLogin({name, password});
+      // console.log(res, '////');
+      // const { token, user} = res.user;
+      set({
+        user: data.user,
+        token: data.token,
+        isLogin: true
+      })
+    }
+  }), {
+    name: 'user-store',
+    partialize: (state) => ({
+      token:state.token,
+      user: state.user,
+      isLogin: state.isLogin
+    })
+  })
 )
-
-
-

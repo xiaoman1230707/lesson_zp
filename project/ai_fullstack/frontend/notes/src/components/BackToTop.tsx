@@ -3,7 +3,7 @@ import {
     useState
 } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowUp} from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { throttle } from '@/utils';
 
 interface BackToTopProps {

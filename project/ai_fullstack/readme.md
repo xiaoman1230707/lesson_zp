@@ -367,3 +367,54 @@ Method + url 定义方式
   - slice 分页数据 
   - pagination 分页信息
 
+
+### JWT 登录
+- http 是无状态的 每次访问都是一样的，基于请求相应的 简单协议
+- Cookie 老派做法
+- Authorization token 身份令牌
+- 颁发令牌 token 
+- jwt 
+  pnpm i json(用户身份对象)web(形式)token(令牌) 
+  用户名 + 密码 {id:1, name:'admin'} json 加密成为一个token 比较安全
+  请求时，带上token发送，在服务器端 decode 得到用户对象，完成用户鉴权
+  - sign 方法 颁发令牌 (用户对象,secret,过期时间)
+  - decode 方法 解析请求头之中的 authorization 字段，获取令牌，得到用户对象，验证登录状态
+
+
+### api 后端接口项目
+- nest new posts
+  高度模块化、依赖注入特性的企业级开发框架
+- 数据库
+
+### prisma ORM 工具
+ 将数据库进行映射成为对象
+ table -> 类
+ row -> 实例
+ 列 -> 属性
+
+psql/mysql sql比较专业，使用prisma 翻译官 对象关系映射
+后端需求 ->         prisma ->      sql
+User(service class)      ====     User(table) 
+create           =====            Insert
+findMany         =====            Select
+### ORM Object-Relational Mapping 对象关系映射
+安装 prisma 
+- pnpm i prisma@6.19.2 稳定
+- pnpm i @prisma/client@6.19.2  客户端库
+### Prisma 的初始化流程
+- 建立数据库
+- prisma 命令行 + @prisma/client(ORM) 
+- npx prisma init 
+
+### schema 文件
+数据库是最重要的，而 schema 就是数据库设计稿，像设计文件一样保存下来，后面可以修改记录版本，方便其查看数据表历史
+用model模型类的概念 描述数据表
+@id primary  key
+@default(@increment())
+@db.VarChar(255)
+@unique
+### migrate 数据表的迁移 
+- npx prisma migrate(迁移) dev --name init_user 
+  利用 schema 建表 
+- 方便
+- 留下日志

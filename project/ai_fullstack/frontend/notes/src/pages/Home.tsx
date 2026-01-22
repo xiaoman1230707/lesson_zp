@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import { Card, CardHeader, CardTitle,CardContent } from '@/components/ui/card';
 import SlideShow,{type SlideData} from '@/components/SildeShow';
-import { useHomeStore } from '@/store/home';
+import { useHomeStore } from '@/store/useHomeStore';
 import {
   useEffect
 } from 'react';

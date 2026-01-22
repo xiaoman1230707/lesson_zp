@@ -16,3 +16,13 @@ export interface Post{
     pics?:string[];// 图片
     user:User;
 }
+// dry 原则 dont repeat yourself
+export interface Credentail {
+    name:string;
+    password:string;
+}
+
+export interface PostsResponse {
+  items: Post[];
+  // 其他字段如 total, page 等按需添加
+}
