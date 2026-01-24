@@ -1,8 +1,8 @@
 import { useUserStore } from '@/store/useUserStore'
 import axios from 'axios';
 // 接口地址都以/api开头 
-axios.defaults.baseURL = 'http://localhost:5173/api'
-//axios.defaults.baseURL = 'http://localhost:3000/api'
+// axios.defaults.baseURL = 'http://localhost:5173/api'
+axios.defaults.baseURL = 'http://localhost:3000/api'
 // 拦截器 interceptors
 // axios api 请求大管家 关于请求的椅子都会给我们
 // data 只是其中一项

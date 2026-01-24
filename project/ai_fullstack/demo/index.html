@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const sleep = (n)=> new Promise(resolve=>setTimeout(resolve,n*1000))
+        const main = ()=>{//不需要再有 async 卡住 await执行
+            // 并行执行呢？
+            // await sleep(3);
+            // await sleep(2);
+            // return Promise.all([sleep(3),sleep(2)]);// 3 s
+            return Promise.race([sleep(3),sleep(2)]);// 2 s
+        }
+        console.time('sleep');
+        main()// Promise 类型的对象
+        .then(()=>{
+            console.timeEnd('sleep');// 5 s
+        })
+        // console.timeEnd('sleep')// 5 ms
+    </script>
+</body>
+</html>
