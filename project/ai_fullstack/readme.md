@@ -380,6 +380,13 @@ Method + url 定义方式
   - sign 方法 颁发令牌 (用户对象,secret,过期时间)
   - decode 方法 解析请求头之中的 authorization 字段，获取令牌，得到用户对象，验证登录状态
 
+### api axios拦截器
+- 可以全局配置
+  - 配置请求头
+  - 配置响应拦截器
+  - 配置请求拦截器
+- 在请求发出或相应接受前进行预操作
+  axios.interceptors 
 
 ### api 后端接口项目
 - nest new posts
