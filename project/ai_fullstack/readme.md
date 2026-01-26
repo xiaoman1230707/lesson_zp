@@ -527,6 +527,36 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   - 在 onModuleInit 方法中调用 $connect 方法连接数据库
   - 提供 PrismaService 服务
   
-  
+### 图片的懒加载
+- img src http 请求并发太多的话会有性能问题
+  - 需要加载的图片，首页首屏
+  那么图片就用占位图片(体积小，地址相同)，优先去加载html，css(页面的布局和结构)，首屏的显示速度优先
+  - 视图窗口(viewport) 可见区域，之外的不需要优先加载
+  监听 onscroll(滚动)事件,节流，滚动到哪里懒加载进入视窗的图片
+- 首先 实例化IntersectionObserver 观察对象
+  Observer 观察者 (设计模式) 模式
+  观察 IntersectionObserver对象与viewport 的交叉
+  entries 所有被观察的对象
+  isIntersecting 是否交叉了视窗
+  dataset-src 展示图片地址
+  observer.unobserve 取消观察
+  给所有的.lazy 加 observer.observe() 观察
+
+## 静态服务器
+- service,提供数据 是动态返回的
+- html/css/js/img 等资源 是静态资源
+- 资源放在根目录下的 uploads 文件夹中
+- 搭建静态服务器
+  区别于动态资源 不需要controller层提供路由
+  只需配置下，就能通过路径访问到静态资源
+  - 从main.ts 中配置
+  - app.useStaticAssets(join(process.cwd(),'uploads'),{
+    prefix:'/uploads',
+  })// 静态资源目录
+
+### 接口数据格式调整
+- 依据前后端文档格式要求
+- prisma-client 查出数据后，通过map格式化输出
+- 后端对接口文档的尊重
 
 

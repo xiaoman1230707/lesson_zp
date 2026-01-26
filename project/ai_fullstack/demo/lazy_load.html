@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片的懒加载</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            height:200vh;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <!-- 数据属性 data-src -->
+    <img class="lazy" src="https://img10.360buyimg.com/wq/jfs/t24601/190/890984006/4559/731564fc/5b7f9b7bN3ccd29ab.png" data-src="https://img.36krcdn.com/hsossms/20260117/v2_1e74add07bb94971845c777e0ce87a49@000000@ai_oswg421938oswg1536oswg722_img_000~tplv-1marlgjv7f-ai-v3:960:400:960:400:q70.jpg?x-oss-process=image/format,webp" alt="">
+    <div class="box"></div>
+    <img class="lazy" src="https://img10.360buyimg.com/wq/jfs/t24601/190/890984006/4559/731564fc/5b7f9b7bN3ccd29ab.png" data-src="https://img.36krcdn.com/hsossms/20260117/v2_1e74add07bb94971845c777e0ce87a49@000000@ai_oswg421938oswg1536oswg722_img_000~tplv-1marlgjv7f-ai-v3:960:400:960:400:q70.jpg?x-oss-process=image/format,webp" alt="">
+
+    <script>
+        const images = document.querySelectorAll('.lazy');
+        // 观察对象 onScroll 事件触发频率高 手动触发 还要解决性能问题
+        // 浏览器提供的观察者模式 自动观察 (内置的，没有性能问题)
+        const observer = new IntersectionObserver(entries=>{
+            // intersection 交集了 出现在了视窗内
+            // console.log(entries)
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){// entry 出现在了视窗内
+                    const img = entry.target;// 拿到图片对象
+                    const original_img = img.dataset.src;// 拿到展示图片地址
+                    console.log(original_img);
+                    img.src = original_img;// 替换为展示图片地址
+                    observer.unobserve(img);// 取消观察
+                }
+            })
+        })
+        images.forEach(img=> observer.observe(img))
+    </script>
+</body>
+</html>

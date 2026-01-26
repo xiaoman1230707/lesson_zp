@@ -71,7 +71,7 @@ model PostTag {
   postId     Int
   tagId      Int 
   post       Post      @relation(fields: [postId], references: [id], onDelete: Cascade)  
-  Tag        Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade) 
+  tag        Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade) 
 // 两个一起做主键 组合查询
   @@id([postId, tagId]) 
 

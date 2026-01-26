@@ -32,7 +32,7 @@ export class PostsService{
                     },
                     tags:{
                         select:{
-                           Tag:{
+                           tag:{
                                 select:{
                                     id:true,
                                     name:true,
@@ -45,14 +45,37 @@ export class PostsService{
                             likes:true,
                             comments:true,
                         }
+                    },
+                    files:{
+                        where:{
+                            mimetype:{ startsWith:'image/' }// 必须以image开头
+                        },
+                        select:{filename:true}
                     }
                 }
             })
         ]);
+        // 整备查询数据
+        const data = posts.map(post=>({
+            id:post.id,
+            title:post.title,
+            // content 截取 作为摘要
+            brief:post.content?post.content.substring(0,100):'',
+            // publishedAt:post.createdAt || null,
+            user:{
+                id:post.user?.id,
+                name:post.user?.name || '',
+                avatar: `http://localhost:3000/uploads/avatar/resized/${post.user?.avatars[0].filename}-small.jpg`
+            },
+            tags:post.tags.map(tag=>(tag.tag.name)),
+            totalLikes:post._count.likes,
+            totalComments:post._count.comments,
+            thumbnail:`http://localhost:3000/uploads/resized/${post.files[0].filename}-thumbnail.jpg` || ''
+        }))
         // const total = await this.prisma.post.count();
         // console.log(total,'------');
         return {
-            items:posts,
+            items:data,
             total,
         }
     }
