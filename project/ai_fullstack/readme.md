@@ -559,4 +559,38 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
 - prisma-client 查出数据后，通过map格式化输出
 - 后端对接口文档的尊重
 
+### 图片懒加载
+- 列表一定要做图片的懒加载
+- react-lazy-load 组件 提供了图片懒加载的功能 背后 IntersectionObserver 实现
+  pnpm i react-lazy-load
+  包着原来要显示的图片 属性loading='lazy' 即可
 
+### InfiniteScroll 无限滚动加载 组件
+- 通用组件
+  为列表带来分页无限加载能力
+- 抽象封装能力
+  可定制的列表作为children 传递 
+  在children下面添加一个哨兵元素(sentinel) 用于被监听是否进入视窗
+- 使用IntersectionObserver threshold 监听sentinel元素
+  进入视窗 触发加载更多数据的回调函数
+
+### 首页优化
+- 当反复切换首页和其他页面时，会重复加载首页的内容，性能浪费
+- 路由的切换
+  - 当是 单页应用时 SPA single page application 
+    前端会有 React + React-Router
+    切换页面时，不会重新请求加载html，css，js
+    只是切换了路由，从js中拿出来不同的组件渲染
+    快 不会白屏 
+  - 没有前端路由时时，切换页面会向后端发送请求，请求数据页面，重新渲染 
+    导致白一下 
+- 首页十分重要，用户会在首页和其他页面频繁切换
+  那么首页内的资源不断卸载、挂载、重复渲染
+  导致用户体验下降
+- 首页 希望 又要支持路由，又要保存首页的资源不卸载
+
+### KeepAlive 
+- home 有这个需求 不能卸载 Keep alive
+- react-activation 
+  cache 缓存起来。 home的界面、数据、状态 都保留着
+  displey:none 离开文档流 让出位置给其他组件

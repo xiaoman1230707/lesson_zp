@@ -28,7 +28,7 @@
         // 浏览器提供的观察者模式 自动观察 (内置的，没有性能问题)
         const observer = new IntersectionObserver(entries=>{
             // intersection 交集了 出现在了视窗内
-            // console.log(entries)
+            console.log(entries)
             entries.forEach(entry=>{
                 if(entry.isIntersecting){// entry 出现在了视窗内
                     const img = entry.target;// 拿到图片对象

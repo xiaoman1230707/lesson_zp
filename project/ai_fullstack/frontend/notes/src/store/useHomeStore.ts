@@ -36,8 +36,8 @@ export const useHomeStore = create<HomeState>((set,get)=>({
   loading:false,
   loadMore: async ()=>{ 
     // loading是开关
-    if(get().loading && !get().hasMore) return;// 避免之前的loadMore还没执行完，就又触发了
-    set({loading:true}); //加载中  跟新状态时
+    if(get().loading || !get().hasMore) return;// 避免之前的loadMore还没执行完，就又触发了
+    set({loading:true}); //加载中  更新状态时
     try{
     const{items} = await fetchPosts(get().page);
     if(items.length === 0){// 没有更多数据了

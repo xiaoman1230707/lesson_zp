@@ -6,7 +6,7 @@ import type { Post } from '@/types/index'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Eye, Heart } from "lucide-react";
-// import LazyLoad from 'react-lazy-load';
+import LazyLoad from 'react-lazy-load';
 
 interface PostItemProps {
   post: Post;
@@ -61,7 +61,7 @@ const PostItem: React.FC<PostItemProps> = ({post}) => {
           </div>
         </div>
       </div>
-      {/* {
+      {
         post.thumbnail && (
           <div className="w-24 h-24 flex-shrink-0 relative overflow-hidden">
             <LazyLoad className="w-full h-full">
@@ -73,7 +73,7 @@ const PostItem: React.FC<PostItemProps> = ({post}) => {
             </LazyLoad>
           </div>
         )
-      } */}
+      }
     </div>
   )
 }
