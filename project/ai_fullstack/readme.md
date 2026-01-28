@@ -594,3 +594,40 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
 - react-activation 
   cache 缓存起来。 home的界面、数据、状态 都保留着
   displey:none 离开文档流 让出位置给其他组件
+- KeepAlive 包裹需要被缓存的组件，使其状态在卸载后仍保留
+  将home 组件 包裹在 KeepAlive 组件中
+- AliveScope 全局缓存容器，必须作为根组件包裹整个需要缓存功能的应用部分
+  包裹路由组件
+  - 那么home 组件 就会被缓存起来
+  当切换路由到其他页面，再切换回来时
+  home 组件 就会从缓存中取出
+  而不是重新渲染
+### 登录功能
+- 注册
+  - password 单向加密
+    不能解密，防程序员，黑客  ，可以确保密码安全
+  - 使用bcrypt 加密算法 单向哈希 
+
+- 第一次往数据库里添加数据时，需要修改假数据顶掉的自增主键
+  SELECT setval('posts_id_seq', (SELECT COALESCE(MAX(id), 0) FROM posts));
+- 登录 
+  JWT Authorization 字段 axios 请求拦截 
+  cookie 之前的登录解决方案，小饼干 http 自动带上cookie,比 localStorage 更安全 更小的本地存储，存储身份信息 
+- JSON jwt 用户身份规范
+  轻量级 跨域 (用户对象信息) 直接给不安全 
+  在Web端使用的  Token (hash 令牌) 双向解密 (sign,decode  secret) 
+  本质就是做 身份验证 共享用户对象信息
+- Auth 认证模块 鉴权模块
+
+### 错误异常模块
+- 后端，错误处理是核心模块。
+  4XX 客户端错误 400 BadRequest 401 Unauthorized
+  5XX 服务器错误
+- try{}  catch(){ ...}
+  错误可以被善待处理 
+- common 模块 
+  BadRequestException
+  nestjs 准备了各种异常类 
+  解决各种问题
+- return 
+  400|401... , statusCode , message 
