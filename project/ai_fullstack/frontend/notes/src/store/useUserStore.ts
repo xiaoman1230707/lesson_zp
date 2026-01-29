@@ -8,7 +8,8 @@ import type { User } from '@/types/index'
 import type { Credentail } from '@/types/index';
 
 interface UserState {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
   user: User | null;
   isLogin: boolean;
   login: (credentials: Credentail) => Promise<void>;
@@ -17,7 +18,8 @@ interface UserState {
 // 高阶函数 柯里化
 export const useUserStore = create<UserState>()(
   persist((set) => ({ // state 对象
-    token: "",
+    accessToken: "",
+    refreshToken: "",
     user: null,
     isLogin: false,
     login: async ({ name, password }) => {
@@ -25,15 +27,18 @@ export const useUserStore = create<UserState>()(
       // console.log(res, '////');
       // const { token, user} = res.user;
       set({
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
         user: data.user,
-        token: data.token,
         isLogin: true
       })
+      // console.log(data, '////');
     }
   }), {
     name: 'user-store',
     partialize: (state) => ({
-      token:state.token,
+      accessToken: state.accessToken,
+      refreshToken: state.refreshToken,
       user: state.user,
       isLogin: state.isLogin
     })

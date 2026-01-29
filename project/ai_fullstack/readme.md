@@ -618,6 +618,25 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   在Web端使用的  Token (hash 令牌) 双向解密 (sign,decode  secret) 
   本质就是做 身份验证 共享用户对象信息
 - Auth 认证模块 鉴权模块
+  @nestjs/jwt nestjs本身提供，需要安装的 jwt身份验证模块
+  jwt 协议 
+  - JWTService sign
+  - JWTModule 需要在Auth模块里面 import 注册JwtModule 提供JwtService 服务 
+
+### JWT 双token机制
+- mockjs ，使用了jsonwebtoken 单token sign/decode
+- 单token 容易被中间人截获，不安全
+- 双token 
+  - access token 访问令牌 
+  - refresh token 刷新令牌
+  - 访问令牌 有效期 15分钟 更安全 可能被中间人攻击，但是暴露时间短
+  - 刷新令牌 有效期 7天 用于刷新访问令牌
+  axios请求中，只用access_token ，会比较快的过期
+  at过期后，使用refresh_token 后端会识别用户身份 在生成一对新token，刷新access_token，覆盖旧的
+  - refresh_token 过期后，用户需要重新登录 
+  使用Promise.all 并行生成双token
+  其他例子： nest.js posts 列表查询， count，和 List Promise.alL 并发查询。
+  还有nest.js双token的并发生成token生成是需要开销性能和时间
 
 ### 错误异常模块
 - 后端，错误处理是核心模块。
@@ -631,3 +650,18 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   解决各种问题
 - return 
   400|401... , statusCode , message 
+
+## 鉴权处理
+- 新增文章，点赞等操作 需要权限的操作，需要先登录
+- 登录后拥有access_token refresh_token 
+  api请求自动带上access_token 到Authorization 字段
+- backend posts.controller createPost 方法
+  createPost 需要收到鉴权的保护？ nestjs 提供了 guard 守卫 的概念
+  req Authorization access_token 
+  可以拿到user 再使用 verify 方法 验证token 是否有效 
+
+### nestjs useGuard 
+- useGuards 是一个装饰器，用于在控制器或路由处理方法上应用守卫 Guard
+  会在路由处理方法前，先执行 Guard 函数，鉴权
+  如果鉴权不通过，会返回401 Unauthorized 错误
+  如果鉴权通过，用jwt verify出来的对象 会帮我们添加到req对象身上 路由处理方法里面就可以使用user对象信息
