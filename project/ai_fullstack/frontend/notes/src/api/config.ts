@@ -11,7 +11,7 @@ axios.defaults.baseURL = 'http://localhost:3000/api'
 // 而钩子有严格的使用规则：只能在 React 组件/自定义钩子的顶层执行，
 // 不能在普通函数、if/for、异步代码里用。
 
-
+// 成功的响应和失败的响应
 axios.interceptors.request.use(config =>{
     const token = useUserStore.getState().accessToken;
     // console.log(token,'//////')
@@ -32,9 +32,10 @@ axios.interceptors.response.use(res=>{
     }
     return res.data;
 },
-  error => {
-    console.error('网络错误', error);
-    return Promise.reject(error);
+  async err => {
+    console.error('网络错误', err);
+    // 可处理 刷新token
+    return Promise.reject(err);
   })
 
 export default axios 

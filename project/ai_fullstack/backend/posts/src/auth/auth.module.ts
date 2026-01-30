@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
+import { JwtAuthGuard } from './guard/jwt-auth.guard';
 // 设计模式 解决的是 面向对象企业级别开发中常见的问题
 // 是经验的总结 
 // 23 种 单例模式 工厂模式 装饰器模式(为类快速添加一些属性方法) 
@@ -12,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
         secret: process.env.TOKEN_SECRET
     })],
     controllers:[AuthController],
-    providers: [AuthService],
+    providers: [AuthService,JwtStrategy,JwtAuthGuard],
+    exports: [JwtAuthGuard]
 })
 export class AuthModule {}

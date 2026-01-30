@@ -665,3 +665,12 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   会在路由处理方法前，先执行 Guard 函数，鉴权
   如果鉴权不通过，会返回401 Unauthorized 错误
   如果鉴权通过，用jwt verify出来的对象 会帮我们添加到req对象身上 路由处理方法里面就可以使用user对象信息
+  - AuthGuard('jwt') 由@nestjs/passport 直接提供
+  - Unknown authentication strategy "jwt"
+    jwt 策略鉴权是怎样的 在哪里？
+    会自动去查找 jwt JwtStrategy 策略
+  - jwt 双token 流程
+    - 双token 生成 @nestjs/jwt
+    - 使用鉴权 @nestjs/guard usrGuard
+    - 刷新 ？ refresh_token
+      useGuard 返回 401 ？

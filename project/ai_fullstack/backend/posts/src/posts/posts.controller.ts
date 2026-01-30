@@ -5,6 +5,7 @@ import {
     Post,
     Body,
     UseGuards,
+    Req,
 } from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { PostQueryDto } from './dto/post-query.dto';
@@ -30,7 +31,13 @@ export class PostsController{
     async createPost(
         @Body("title") title:string,
         @Body("content") content:string,
+        @Req() req,
     ){
-        return {title,content};
+        // console.log(req)
+        return this.postsService.create({
+            title,
+            content,
+            userId:req.user.id,
+        })
     }
 }
