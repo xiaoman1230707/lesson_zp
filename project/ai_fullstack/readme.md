@@ -674,3 +674,40 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
     - 使用鉴权 @nestjs/guard usrGuard
     - 刷新 ？ refresh_token
       useGuard 返回 401 ？
+
+### refresh token 
+- axios 响应拦截，有成功处理函数，如果服务器抛出异常，执行失败处理函数
+  找到了refresh 入口，token过期可以从这里refresh 
+  
+- 请求失败：拦截到响应 401 Unauthorized 且该请求未重试过（!_retry）
+- 检查刷新状态：
+  若正在刷新（isRefreshing），将当前请求加入 等待队列（闭包保存 config 和 resolve）
+  否则标记 isRefreshing = true，开始刷新流程
+- 尝试刷新：
+  读取本地 refreshToken
+  若无 refreshToken → 直接登出用户
+  否则发起 /auth/refresh 请求获取新 access_token 和 refresh_token
+- 更新状态：
+  保存新 token 到全局状态
+  通知队列中所有等待请求：用新 token 重发
+- 清理与恢复：
+  清空队列，关闭刷新锁
+  重发当前请求
+- 失败处理：刷新异常（如网络错误、rt失效）→ 强制登出用户
+
+### chatbot
+- 流式输出
+- llm 像是函数 参数(百亿级别)
+  llm 提出的问题 input
+  llm 返回 output
+  智能
+  token 生成也是按照token来生成
+  把前面的token作为上下文，后面的token作为问题，生成新的token
+  神经网络系统 AIGC 即为 tokens 的循环生成
+
+  - 前端用户体验
+    响应更快，想打字机一样的效果，水流一样逐字逐句输出
+  
+  - http 请求
+    Connection: Keep-Alive
+    事件监听 SSE Server Send Event 事件流 实时更新
