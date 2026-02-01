@@ -711,3 +711,13 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   - http 请求
     Connection: Keep-Alive
     事件监听 SSE Server Send Event 事件流 实时更新
+
+### chatbot hook
+- 将bot 的响应式业务剥离
+- versel ai-sdk/react
+  AI 前端应用，nextjs(react ssr框架)
+  @ai sdk 封装了chatbot，快速开发
+  - chatbotUi 、响应式和AI业务的剥离
+- mockjs 流式输出
+  rawResponse 原始响应体 支持流式输出 
+  模拟流式输出，每次返回一个token，前端可以逐字逐句输出

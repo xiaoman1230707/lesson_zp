@@ -1,13 +1,16 @@
-// for(var i = 0; i < 5; i++){
-//     setTimeout(function timer(){
-//         console.log(i);
-//     },i * 1000)
-// }
+/**
+ * @param {number[]} nums
+ * @return {boolean}
+ */
+var canJump = function(nums) {
+    let fast = 0;
+    for(let i = 0; i <= fast && i < nums.length ; i++){
+        if(i + nums[i] > fast) fast = i + nums[i];
+    }
+    console.log(fast);
+    if(fast >= nums.length - 1) return true;
+    return false;
+};
 
-for(var i = 0; i < 5; i++){
-   (function(j){
-    setTimeout(function(){
-        console.log(j);
-    },i * 1000)
-   })(i);
-}
+const nums = [1,1,1,0];
+console.log(canJump(nums));
