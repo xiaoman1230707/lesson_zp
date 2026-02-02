@@ -2,7 +2,7 @@
 // 在AI场景里 模型生成文本是逐个token 产生的 (模型每次基于已生成的token序列
 // 通过自回归的方式预测下一个最可能的token)
 // streaming : true
-// http chunked 数据块来穿，res.end()不用 就不会结束
+// http 请求大模型 传递 chunked 数据块给后端，res.end()不用 就不会结束
 // res.write(chunk) 写入数据块
 // SSE text/event-stream 模式去发送 token
 import { config } from 'dotenv'
@@ -49,31 +49,45 @@ export default [
                     })
                     if (!response.body) throw new Error('response body is null');
                     // SSE 二进制流 buffer 会有reader对象 接管子一样 
-                    const reader = response.body.getReader();
+                    // LLM 输出和解析token之间 的脸上的管子
+                    // 不断读取llm 输出的token流 
+                    const reader = response.body.getReader();// 用来得到流式的tokens 为buffer
+                    // 解码器  用于将 ArrayBuffer 或 TypedArray（如 Uint8Array）解码为字符串，
+                    // Uint8Array 字节数据 解码为UTF-8 字符串 
                     const decoder = new TextDecoder()
                     while (true) {
+                        // llm 的生成被分块了 每次生成一个token 就会触发read事件
+                        // 事件，有新的token生成了 就会触发
                         const { done, value } = await reader.read();
                         // console.log(done,value,'------------')
                         if (done) {
                             break;
                         }
+                        // 解析token 为字符串 LLM内部为 数学向量 
                         const chunk = decoder.decode(value);
                         // console.log(chunk,'------------')
+                        // 每个token 以\n 结尾 分割出每个token
                         const lines = chunk.split('\n');
                         for (let line of lines) {
+                            // [DONE] 表示 llm 生成结束 ，(data: )开头为正确格式
+                            // 过滤掉空行和[DONE]标记 拿到有效数据
                             if (line.startsWith('data: ') && line !== 'data: [DONE]') {
                                 try {
+                                    // 去掉前缀 data: 
                                     const data = JSON.parse(line.slice(6));
+                                    // ?. 可选链操作符  如果choices 或 delta 不存在 就返回空字符串 代码健壮性
+                                    // 拿到delta(增量)中的 内容 又一次的token生成
                                     const content = data.choices[0]?.delta?.content || '';
                                     if (content) {
-                                        res.write(`0:${JSON.stringify(content)}\n`)
+                                        // ai-sdk 要求的格式 0:token\n
+                                        res.write(`0:${JSON.stringify(content)}\n`)// 传输给前端 不中断连接
                                     }
                                 } catch (err) { }
                             }
                         }
 
                     }
-                    res.end();
+                    res.end();// 断开连接
                 } catch (err) {
                     console.error('chatbot error', err);
                 }

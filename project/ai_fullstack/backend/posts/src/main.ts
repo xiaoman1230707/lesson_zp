@@ -14,7 +14,7 @@ async function bootstrap() {
   // 启用全局验证管道 ，基于express
   app.useGlobalPipes(new ValidationPipe({
     whitelist:true, // 自动过滤dot未定义的属性
-    forbidNonWhitelisted:true, // 没有得到定义的属性直接报错
+    // forbidNonWhitelisted:true, // 没有得到定义的属性直接报错
     transform:true, // 自动转换类型 "1" transform 1 ，按照dto对象的类型
   }))
   // 搭建静态服务器
