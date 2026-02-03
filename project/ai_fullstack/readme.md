@@ -618,7 +618,7 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   在Web端使用的  Token (hash 令牌) 双向解密 (sign,decode  secret) 
   本质就是做 身份验证 共享用户对象信息
 - Auth 认证模块 鉴权模块
-  @nestjs/jwt nestjs本身提供，需要安装的 jwt身份验证模块
+  @nestjs/jwt nestjs 本身提供，需要安装的 jwt身份验证模块
   jwt 协议 
   - JWTService sign
   - JWTModule 需要在Auth模块里面 import 注册JwtModule 提供JwtService 服务 
@@ -721,3 +721,36 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
 - mockjs 流式输出
   rawResponse 原始响应体 支持流式输出 
   模拟流式输出，每次返回一个token，前端可以逐字逐句输出
+  model: streaming: true 开启流式输出
+  事件监听 SSE 流式响应 由@ai/sdk封装
+  响应头设置
+    Content-Type: text/event-stream
+    Cache-Control: no-cache
+    Connection: keep-alive
+    reader.read() 读取响应体
+    TextDecoder 解码响应体 为字符串
+    res.write 写入响应体
+    data: [DONE] res.end 结束响应
+    langchain 后端的业务封装
+- this.chatModel.steam()
+  for await (const token of stream) {
+    res.write(`0:${JSON.stringify(token)}\n`);
+  }
+  res.end();
+
+### 搜索功能
+- mockjs 模拟搜索接口
+  /api/search?keyword=vue
+  搜索文章标题 内容 标签
+  返回文章列表 
+  路径中存在中文这种非 ASCII 编码的字符，需要编码 encodeURI
+  - 字符串匹配
+  - like模糊匹配
+  - 基于大模型的语义搜索
+    搜索 前端 可以搜索到 vue react
+- 服务器开销大
+  封装了useDebounce 防抖hooks
+  - 响应式的 debounce 值
+  - useEffect 清除函数 防抖
+  - 专一于 防抖的包装
+    

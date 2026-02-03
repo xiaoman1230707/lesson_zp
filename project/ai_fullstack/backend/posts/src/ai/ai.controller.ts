@@ -21,9 +21,10 @@ export class AIController{
         res.setHeader('Cache-Control','no-cache');// 不缓存 每次llm 都重新生成
         res.setHeader('Connection','keep-alive');// 保持连接 ，不关闭
         try{
-            await this.aiService.chat(chatDto.messages,(token)=>{
+            await this.aiService.chat(chatDto.messages,(token:string)=>{
                 res.write(`0:${JSON.stringify(token)}\n`);
             });
+            res.end();
         }catch(err){
             res.status(500).end();
         }

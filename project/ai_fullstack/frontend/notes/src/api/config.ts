@@ -4,8 +4,8 @@ import axios from 'axios';
 // axios.defaults.baseURL = 'http://localhost:5173/api'
 // axios.defaults.baseURL = 'http://localhost:3000/api'
 const instance = axios.create({
-  // baseURL: 'http://localhost:5173/api',
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://localhost:5173/api',
+  // baseURL: 'http://localhost:3000/api',
 })
 // 拦截器 interceptors
 // axios api 请求大管家 关于请求的椅子都会给我们

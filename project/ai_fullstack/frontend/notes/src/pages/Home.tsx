@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import Header from '@/components/Header'
 import SlideShow from '@/components/SildeShow'
-
+import { useNavigate } from 'react-router-dom'
 import {
   Card,
   CardHeader,
@@ -11,6 +10,8 @@ import {
 import { useHomeStore } from '@/store/useHomeStore'
 import InfiniteScroll from '@/components/InfiniteScroll';
 import PostItem from '@/components/PostItem';
+import {  Input } from '@/components/ui/input';
+import { Search } from 'lucide-react'
 export default function Home() {
   const {
     banners,
@@ -19,20 +20,33 @@ export default function Home() {
     loadMore,
     loading,
   } = useHomeStore()
+  const navigate = useNavigate()
   useEffect(() => {
     loadMore()
   }, [])
   return (
     <>
-      <Header title="首页" showBackBtn={true} />
-      <div className="p-4 space-y-4">
+   <div 
+        className="fixed top-0 left-0 right-0 px-4 py-2 bg-background"
+        onClick={() => navigate("/search")}
+      >
+        <div className="relative max-x-md mx-auto">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
+          <Input 
+            readOnly
+            placeholder="搜索你感兴趣的内容"
+            className="pl-9 rounded-full cursor-pointer bg-muted"
+          />
+        </div>
+      </div>
+      <div className="pt-14 p-4 space-y-4">
         <SlideShow slides={banners} />
         <Card>
           <CardHeader>
-            <CardTitle>小田田</CardTitle>
+            <CardTitle>欢迎来到React Mobile</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-muted-foreground">爱打瓦洛兰特</p>
+            <p className="text-muted-foreground">这是内容区域</p>
           </CardContent>
         </Card>
         <div className="grid grid-cols-2 gap-4">
