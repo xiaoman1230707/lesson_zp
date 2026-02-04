@@ -754,3 +754,13 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
   - useEffect 清除函数 防抖
   - 专一于 防抖的包装
     
+### 语义化搜索 embedding
+hello 你好 文本匹配失效，可以用 语义化相似度 
+转变为数学问题 向量的概念，高纬度世界 openai为 1536维 
+- openai 提供了embedding.create() 接口 可进行文本向量化
+- fs/promises 文件模块
+  - readFile
+    JSON.parse 解析json字符串为js对象
+  - writeFile 写入文件
+    JSON.stringify 把js对象转换为json字符串
+- 向量相似度计算

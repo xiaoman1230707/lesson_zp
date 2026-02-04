@@ -3,9 +3,12 @@ import{
     Post,
     Body,
     Res,
+    Get,
+    Query,
 } from '@nestjs/common';
 import { AIService } from './ai.service';
 import { ChatDto } from './dto/chat.dto';
+import { SearchDto } from './dto/search.dto';
 
 @Controller('ai')
 export class AIController{
@@ -28,5 +31,12 @@ export class AIController{
         }catch(err){
             res.status(500).end();
         }
+    }
+
+    @Get('search')
+    async search(@Query() dto:SearchDto){// 使用 @Query('keyword') —— 只取单个参数
+        const {keyword} = dto;
+        let decoded = decodeURIComponent(keyword);
+        return this.aiService.search(decoded);
     }
 }

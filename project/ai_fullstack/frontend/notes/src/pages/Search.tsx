@@ -109,7 +109,7 @@ const SearchPage: React.FC = () => {
                 </div>
               )}
               {
-                suggestions.map((item,index)=>(
+                !loading && suggestions.map((item,index)=>(
                   <div 
                   className="p-4 py-3 border-b text-sm active:bg-muted" 
                   key={index}

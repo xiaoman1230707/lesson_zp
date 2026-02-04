@@ -19,7 +19,10 @@ export class AuthService {
         const user = await this.prisma.user.findUnique({
             where: {
                 name,
-            }
+            },
+            include: {
+                avatars: true,
+            },
         })
         if(!user || !await bcrypt.compare(password, user.password) ){
             throw new UnauthorizedException('没有权限');
@@ -32,6 +35,7 @@ export class AuthService {
             user:{
                 id:user.id.toString(),
                 name:user.name,
+                avatar:`http://localhost:3000/uploads/avatar/resized/${user.avatars?.[0]?.filename}-large.jpg`,
             }
         };
     }
