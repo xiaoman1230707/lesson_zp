@@ -19,6 +19,8 @@ const Chat = lazy(()=>import('@/pages/Chat'))
 const PostLayout = lazy(()=>import('@/layouts/PostLayout'))
 const PostDetail = lazy(()=>import('@/pages/post'))
 const Search = lazy(()=>import('@/pages/Search'))
+const RAG = lazy(()=>import('@/pages/RAG'))
+const Git = lazy(()=>import('@/pages/Git'))
 
 export default function RouterConfig(
   {children}: {children?: React.ReactNode}
@@ -33,6 +35,8 @@ export default function RouterConfig(
                         <Route path='/login' element={<Login />} />
                         <Route path='/chat' element={<Chat />} />
                         <Route path='/search' element={<Search />} />
+                        <Route path='/rag' element={<RAG />} />
+                        <Route path='/git' element={<Git />} />
                         {/* Post 模块 */}
                         <Route path='/post' element={<PostLayout />}>
                             <Route path=':id' element={<PostDetail />} />

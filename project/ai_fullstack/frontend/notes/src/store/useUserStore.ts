@@ -2,7 +2,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import {
-  doLogin
+  doLogin,
+  getAiAvatar
 } from '@/api/user'
 import type { User } from '@/types/index'
 import type { Credentail } from '@/types/index';
@@ -14,11 +15,12 @@ interface UserState {
   isLogin: boolean;
   login: (credentials: Credentail) => Promise<void>;
   logout: () => void;
+  aiAvatar: () => Promise<void>;
 }
 
 // 高阶函数 柯里化
 export const useUserStore = create<UserState>()(
-  persist((set) => ({ // state 对象
+  persist((set,get) => ({ // state 对象
     accessToken: "",
     refreshToken: "",
     user: null,
@@ -41,6 +43,17 @@ export const useUserStore = create<UserState>()(
         accessToken:"",
         refreshToken:"",
         isLogin:false,
+      })
+    },
+    aiAvatar:async ()=>{
+      // coze title desc 生成应用的logo
+      const name = get().user?.name;
+      const avatar = await getAiAvatar(name || '');
+      set({
+        user: get().user ? {
+          ...get().user!,
+          avatar
+        } : null
       })
     }
   }), {

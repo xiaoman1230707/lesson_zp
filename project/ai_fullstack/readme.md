@@ -764,3 +764,20 @@ hello 你好 文本匹配失效，可以用 语义化相似度
   - writeFile 写入文件
     JSON.stringify 把js对象转换为json字符串
 - 向量相似度计算
+
+### RAG 
+Retriever(搜索) Augument(增强) Generation(生成)
+1. 让llm 可以去检索文档 (如私有知识库)  embedding 向量化
+2. 将检索到的内容(相似度) 作为上下文 增强promot
+3. 交给llm，增强生成 
+- rag 界面 类似于 Chatbot，可以上传文件 之类
+
+### Git AI 工具
+- 提效
+  AI editor
+- 专业
+  新手和专家一样工作
+  git commit -m "" 尽量和本轮开发相关，能够表达功能的描述 (有模式规范)
+  假如ai能够帮助我们根据大厂规范 生成符合规范的commit message ，能够提高我们的开发效率
+  Conventional Commits 规范  有描述性 功能性 可读性
+  

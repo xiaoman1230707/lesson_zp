@@ -39,4 +39,19 @@ export class AIController{
         let decoded = decodeURIComponent(keyword);
         return this.aiService.search(decoded);
     }
+
+    @Get('avatar')
+    async avatar(@Query('name') name:string){
+        return this.aiService.avatar(name);
+    }
+
+    @Post('rag')
+    async rag(@Body() {question}:{question:string}){
+        const answer = await this.aiService.rag(question);
+        // console.log(answer,'////');
+        return {
+            code:0,
+            answer
+        }
+    }
 }

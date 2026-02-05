@@ -8,9 +8,12 @@ import {
     ChatDeepSeek
 } from '@langchain/deepseek';
 import { SystemMessage, HumanMessage, AIMessage } from 'langchain';
-import { OpenAIEmbeddings } from '@langchain/openai';
+import { OpenAIEmbeddings ,DallEAPIWrapper} from '@langchain/openai';
 import * as fs from 'fs/promises';
 import * as path from 'path';
+// 向量数据库 ai应用功能的核心之一
+import { MemoryVectorStore } from '@langchain/classic/vectorstores/memory';
+import { Document } from 'langchain'
 
 interface Post{
     title:string;
@@ -43,6 +46,7 @@ export function cosineSimilarity(v1: number[], v2: number[]): number {
 
 @Injectable()
 export class AIService{
+    private imagGenerator:DallEAPIWrapper;
     private posts:Post[] = [];
     private embeddings:OpenAIEmbeddings;
     private chatModel:ChatDeepSeek; // 让 llm成为一个service 私有属性
@@ -64,6 +68,12 @@ export class AIService{
             model:'text-embedding-ada-002',
         });
         this.loadPosts();
+        this.imagGenerator = new DallEAPIWrapper({
+            openAIApiKey:process.env.OPENAI_API_KEY,
+            n:1,
+            size:'1024x1024',
+            quality:'standard',
+        });
     }
 
     private async loadPosts(){
@@ -87,7 +97,7 @@ export class AIService{
 
     async chat(messages:Message[],onToken:(token:string)=>void){
         const langChainMessages = convertToLangChainMessages(messages);
-        console.log(langChainMessages,'????????');
+        // console.log(langChainMessages,'????????');
         const stream = await this.chatModel.stream(langChainMessages);
         for await (const chunk of stream){
             const content = chunk.content as string; // 断言 内容一定为字符串
@@ -116,4 +126,55 @@ export class AIService{
             data:results,
         };
     }
+
+    async avatar(name:string){
+        const imgURL = await this.imagGenerator.invoke(`
+            你是一位头像设计师，
+            根据用户的姓名${name}，
+            设计一个专业的头像。
+            风格卡通，时尚，好看。
+            `);
+        // console.log(imgURL,'imgURL');
+        return imgURL;
+    }
+
+    async rag(question:string){
+   // google 
+    // 知识库 embedding 
+    // 内存向量数据库， 
+    // 向量-> 向量存储 源文件（Document）this.embeddings(llm) 结果存储下来
+    const vectorStore = await MemoryVectorStore.fromDocuments(
+      [
+        new Document({
+          pageContent: "React是一个用于构建用户界面的JavaScript库"
+        }),
+        new Document({
+          pageContent: "NestJS 是一个用于构建服务器应用的node.js框架，擅长企业级开发"
+        }),
+        new Document({
+          pageContent: "RAG 通过检索外部知识增强大模型的回答能力"
+        }),
+      ],
+      this.embeddings
+    )
+    // 相似度
+    const docs = await vectorStore.similaritySearch(question, 1);
+    console.log(docs);
+    // llm chat 的上下文 增强Augument
+    // 检索 retrieve
+    const context = docs.map(d => d.pageContent).join('\n');
+    // 增强 Augmented
+    const prompt = `
+      你是一个专业的JS工程师，请基于下面资料回答问题。
+      资料：
+      ${context}
+
+      问题:
+      ${question}
+    `;
+    // 生成 Generation
+    const res = await this.chatModel.invoke(prompt);
+    // console.log(res);
+    return res.content;
+  }
 }
