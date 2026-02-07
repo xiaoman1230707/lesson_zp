@@ -780,4 +780,8 @@ Retriever(搜索) Augument(增强) Generation(生成)
   git commit -m "" 尽量和本轮开发相关，能够表达功能的描述 (有模式规范)
   假如ai能够帮助我们根据大厂规范 生成符合规范的commit message ，能够提高我们的开发效率
   Conventional Commits 规范  有描述性 功能性 可读性
-  
+  - Conventional Commits 是一种写 commit 信息的规范，简单说就是让每次 Git 提交的消息格式统一，比如用 feat、fix、docs 这些前缀开头，后面跟上具体干了啥。这样不仅能让人一眼看懂改了什么，还能自动生成 changelog、自动打版本号，对团队协作和发布特别有帮助。
+- 使用流程 规范化的操作
+  - git diff 拿到结果
+  - prompt commit 
+  - git commit -m "..."
