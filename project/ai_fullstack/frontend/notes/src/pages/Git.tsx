@@ -5,7 +5,7 @@ import { useGitStore } from '@/store/git';
 
 const Git: React.FC = () => {
   const { loading, diff, setLoading, setDiff, getCommit, commit } = useGitStore();
-  console.log(commit, "///");
+  // console.log(commit, "///");
   const handleSubmit = async () => {
     if (!diff.trim()) return;
     setLoading(true);

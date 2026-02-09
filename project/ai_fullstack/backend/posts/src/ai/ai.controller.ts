@@ -54,4 +54,14 @@ export class AIController{
             answer
         }
     }
+
+    @Post('git')
+    async git(@Body() {diff}:{diff:string}){
+        const commit = await this.aiService.git(diff);
+        // console.log(answer,'////');
+        return {
+            code:0,
+            commit
+        }
+    }
 }
