@@ -20,3 +20,17 @@
     因为项目是多人协作的，自增ID会导致冲突，所以用sha算法来生成唯一ID
     2 insertions(+) 2行新增
     加入仓库的是文件的修改，生成的是文件的新的版本
+
+- git diff 查看代码和仓库的差异
+  重大提交前务必先diff再提交 好习惯
+- 6530521 (HEAD -> master) append GPL
+  HEAD 指针 指向当前分支的最新提交
+  可以移动指针去穿越
+- 版本回退
+  git reset --hard HEAD^
+  HEAD 代表当前指针 ^ 代表回退一个版本
+  ^2 回退两个版本
+  还可以直接给版本号 回退到指定版本
+  git reset --hard 6530521
+- 将工作区的修改全部撤销
+  git checkout -- readme.txt

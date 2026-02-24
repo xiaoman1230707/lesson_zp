@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var myObject = {
+            name:'极客时间',
+            showThis:function(){
+                this.name = '极客帮';
+                console.log(this);
+            }
+        }
+        var foo = myObject.showThis;// 引用 window.foo
+    </script>
+</body>
+</html>

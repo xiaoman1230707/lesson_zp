@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function foo(){
+            console.log(this); // window
+        }
+        foo();// 普通函数运行时 指向window 相当于 window.foo()
+        // foo 是声明在全局作用域变量环境 挂载在window对象上 污染了全局
+        let bar = {
+            myName:"极客帮",
+            test1:1
+        }
+        function foo(){
+            this.myName = '极客时间';
+        }
+        // 接受指定this的指向为第一个参数并运行
+        // foo.call(bar); // this被指定为bar
+        // 和call一样，并可接受数组参数
+        // foo.apply(bar); // this被指定为bar
+        var myObject = {
+            name:'极客时间',
+            showThis:function(){
+                console.log(this);
+            }
+        }
+        myObject.showThis(); // 作为对象的方法使用 
+        console.log(bar); // 极客时间
+    </script>
+</body>
+</html>
