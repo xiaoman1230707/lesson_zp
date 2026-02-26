@@ -57,7 +57,6 @@ const writeFileTool = tool(
 )
 
 // 执行命令工具
-
 const executeCommanTool = tool(
     async ({ command, workingDirectory }) => {
         const cwd = workingDirectory || process.cwd(); // 默认当前工作目录
@@ -99,6 +98,28 @@ const executeCommanTool = tool(
         schema: z.object({
             command: z.string().describe('要执行的命令'),
             workingDirectory: z.string().optional().describe('指定工作目录，默认当前工作目录')
+        })
+    }
+)
+
+// 列出目录工具
+const listDirectoryTool = tool(
+    async({directoryPath}) => {
+        try{
+            const files = await fs.readdir(directoryPath);
+            console.log(`[工具调用] list_directory("${directoryPath}") 成功列出 ${files.length} 个文件`);
+            return `目录内容：\n${files.map(file => `- ${file}`).join('\n')}`;
+        }catch(err){
+            console.log(`[工具调用] list_directory("${directoryPath}") 失败: ${err.message}`);
+            return `列出目录失败:${err.message}`
+        }
+    },{
+        name: "list_directory",
+        description: `
+        列出指定目录下的所有文件和文件夹
+        `,
+        schema: z.object({
+            directoryPath: z.string().describe("要列出的目录路径"),
         })
     }
 )
