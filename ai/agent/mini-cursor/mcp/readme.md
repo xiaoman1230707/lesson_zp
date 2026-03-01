@@ -50,3 +50,33 @@ MCP 最大的特点就是可以跨进程调用工具
   - registerTool
     description 会描述此mcp功能，方便client 调用
   - connect transport 连接
+
+## mcp 三者关系
+
+- mcp hosts
+    cursor/vite Agent host 
+- mcp clients
+    mcp 规范的tools 调用者
+- mcp server 
+    mcp tool 运行的服务器容器
+
+- 工作流程
+  - MCP hosts 配置文件 (SDD 规范驱动编程)
+  - initialize 发送一起请求
+    得到mcp server 提供的 tools 列表和详情 
+  - host 得到prompt 任务
+  - 检索 mcp 配置文件
+  - client tool 通信方式 
+  - 调用mcp server 执行并返回结果
+  - llm ToolMessage 
+
+## MCP 开发流程
+- new McpServer 创建了一个mcp server 实例
+- server，register Tool/Resource/Prompt 名字 描述 函数
+- 通信方式 StdioserverTransport HttpServerTransport 
+- server connect(transport) 连接通信方式
+- host mcp 配置
+
+## mcp 直接入住Agent 程序
+- 怎么把 mcp tools 集成到Agent程序里面呢？
+  mcp 是可拔插的
