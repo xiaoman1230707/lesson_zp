@@ -100,7 +100,7 @@ const vectorstores = await MemoryVectorStore.fromDocuments(decument, embeddings)
 // k 返回多少段文档
 const retriever = vectorstores.asRetriever({k : 2});
 
-const question = ["光光和东东开始是怎样成为朋友的？"];
+const question = ["光光和东东各自擅长什么？"];
 
 for(const q of question){
     console.log('='.repeat(80));
@@ -110,11 +110,11 @@ for(const q of question){
     // 然后 从向量数据库中检索出与 question 向量 最相似的文档
     const retrievedDocs = await retriever.invoke(q);
     // console.log(retrievedDocs);
-    const storeReults = await vectorstores.similaritySearchWithScore(q,2);
-    console.log(storeReults);
+    const scoreReults = await vectorstores.similaritySearchWithScore(q,2);
+    console.log(scoreReults);
     console.log('\n [检索到当前文档及相似度评分]');
     retrievedDocs.forEach((doc, i) => {
-        const scoreResult = scoreResult.find(
+        const scoreResult = scoreReults.find(
             ([scoredDoc]) => scoredDoc.pageContent === doc.pageContent
         );
         const score = scoreResult ? scoreResult[1] : 'null';
@@ -123,4 +123,23 @@ for(const q of question){
         console.log(`内容: ${doc.pageContent}`);
         console.log(`元数据: ${JSON.stringify(doc.metadata)}`);
     })
+
+    const context = retrievedDocs.map((doc,i) => `片段 ${i+1} 内容: ${doc.pageContent}`).join("\n----\n");
+    const prompt = `
+    基于以下故事片段回答问题，用温暖生动的语言。
+    如果故事中没有提及，就说“这个故事里没有提到这个细节”
+
+    故事片段：
+    ${context}
+    
+    问题：
+    ${q}
+
+    老师的回答：
+    `;
+
+    console.log('\n AI回答')
+    const response = await model.invoke(prompt);
+    console.log(response.content);
+    console.log('\n')
 }
