@@ -1,0 +1,19 @@
+{
+  "name": "splitter-test",
+  "version": "1.0.0",
+  "description": "- loader 加载的大Document @langchain/community\r   pdf doc 的loader类型不一样 \r - RecursiceCharaterTextSplitter 递归字符文本分割器 @langchain/core\r   - Text 文本型的切割器\r - splitter \r   character 按这个切 本身就是符合语义\r   [。？！，]\r   越前面 优先级越高 “。” 最优先\r   随着这一段字符长度逐渐靠近 chunk_size ，他会递归的尝试用下一个字符切\r   当用“，” 之类的切割时，就会造成 句子被切断，导致语义不完整\r   那么Overlap 牺牲一定空间(chunk_size 10%) 在下一个chunk重复\r     一句话少了 两句话多了，就用！ ， 等 字更少的话加上，尽量接近chunk_size,并在下一个chunk 开始重叠 这一小句(保持语义)(ChunkOverlap)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@langchain/core": "^1.1.31",
+    "@langchain/textsplitters": "^1.0.1",
+    "dotenv": "^17.3.1",
+    "js-tiktoken": "^1.0.21"
+  }
+}
