@@ -1,0 +1,22 @@
+{
+  "name": "rag-book",
+  "version": "1.0.0",
+  "description": "- 一本电子书，如何做RAG 检索增强生成\r 1. 知识库\r 2. @langchain/community \r    中 来自社区的各种 loader \r 3. Splitter \r 4. Document \r    pageContent \r    meta: \r 5. Embedding Model \r 6. Milvus",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@langchain/community": "^1.1.22",
+    "@langchain/openai": "^1.2.12",
+    "@langchain/textsplitters": "^1.0.1",
+    "@zilliz/milvus2-sdk-node": "^2.6.10",
+    "dotenv": "^17.3.1",
+    "epub2": "^3.0.2",
+    "html-to-text": "^9.0.5"
+  }
+}

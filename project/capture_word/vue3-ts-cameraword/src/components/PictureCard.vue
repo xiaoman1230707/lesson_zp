@@ -36,6 +36,11 @@ const updateImageData = async (e: Event): Promise<any> => {
         }
     })
 }
+
+const playAudio = () =>{
+  const audio = new Audio(props.audio);
+  audio.play();
+}
 </script>
 
 <template>
@@ -49,7 +54,7 @@ const updateImageData = async (e: Event): Promise<any> => {
     <div class="word">
         {{props.word}}
     </div>
-    <div class="playAudio" v-if="audio">
+    <div class="playAudio" v-if="audio" @click="playAudio">
         <img :src="voiceIcon" alt="play" width="20px" >
     </div>
   </div>

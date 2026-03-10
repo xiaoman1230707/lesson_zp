@@ -54,3 +54,20 @@
   帮助使用读屏器的盲人使用
   input[type="file"] 比较难控制样式
   display:none, for id 样式控制
+- Prompt 设计
+  AIGC 产品里Prompt 设计核心
+  - 清晰地指令
+    一个单词 A1~A2 级别
+  - outputParser 输出格式JSON，有利于业务的持续执行
+  - 产品的设计 对齐 大模型的输出格式
+  - 多模态模型的接口标准
+    content 数组 图片 base64格式 字符编码(HTML5)
+
+- 文件上传体验
+  - type="file" input + accept 
+  - 上传慢慢长夜 即时显示图片
+    - FileReader 
+      html5带来 js 运行在浏览器 可以跳到操作系统 在没上传时就可以读取图片文件 、调用摄像头
+      浏览器原生的 FileReader 实例。这是 HTML5 提供的 API，专门用于在客户端异步读取用户计算机上的文件内容。
+    - readDataAsURL(file)
+    - onload base64 图片
