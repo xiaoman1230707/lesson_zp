@@ -11,10 +11,10 @@ MinStack.prototype.push = function(x){
     }
 }
 MinStack.prototype.pop = function(){
-   return this.stack.pop();
    if(this.minStack[this.minStack.length - 1] === x){
        this.minStack.pop();
    }
+   return this.stack.pop();
 }
 MinStack.prototype.top = function(){
     if(!this.stack.length === 0)

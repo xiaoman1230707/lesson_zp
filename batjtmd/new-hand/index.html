@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 模拟new 的功能
+        // reset 运算符
+        function ObjectFactory() {
+            // var obj = {};// 从空对象开始
+            var obj = new Object();
+            // Constructor.apply(obj,args);
+            // console.log(arguments);
+            // 从第二个参数开始
+            // let Constructor = [...arguments].shift();// 不能去除arguments的第一个参数 
+            let Constructor = [].shift.call(arguments);// 从arguments 中取出第一个参数，就是构造函数,并丢掉第一个
+            console.log(arguments);
+            Constructor.apply(obj,arguments);// 从arguments 中取出其他参数，就是构造函数的参数
+            obj.__proto__ = Constructor.prototype;// 手动设置原型链
+            return obj;
+        }
+        function Person(name,age){
+            this.name = name;
+            this.age = age;
+        }
+        Person.prototype.species = '人类';
+        Person.prototype.sayHi = function(){
+            console.log(`你好我是${this.name}`);
+        }
+        let p = new Person('张三',18);
+        let zzp = ObjectFactory(Person,'李四',18);
+        console.log(p,zzp);
+        console.log(p instanceof Person);
+        console.log(zzp instanceof Person);
+    </script>
+</body>
