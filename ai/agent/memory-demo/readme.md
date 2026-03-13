@@ -37,7 +37,8 @@
   - 检索 (先存起来 数据库 文件) 之前的对话总结 (作为上下文、知识库) ，基于 rag 来增强 llm回答
     cursor 等 超越当前对话，将之前对话存储，rag 利用的场景
     AI Agent越来越懂我们 
-  - 清空messages 重新开始 
+
+    清空messages 重新开始 
     因为memory 有时也会是阻碍 新的任务 节省token
 
     - cursor 通过messages 计算toke的开销
@@ -47,3 +48,18 @@
       /compact
       /clean
       又能vibe coding 又能省token的 ai工程师
+
+## FileSystemChatMessageHistory
+- cursor 的messages history 实现方案
+  - session 会话 代表一次交流、会话过程 有一个主题 
+    - js
+    - 算法
+    - 手写题
+    - AI
+    都是一个个不同的session 
+  - 全新主题，就新开一个session 
+  - 持久化存储 messageHistory
+  - 可以根据sessionId 恢复之前的对话 继续chat
+  - 理解 实现了cursor 的memory 的持久化功能 
+  
+## 截断

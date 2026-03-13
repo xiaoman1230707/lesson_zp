@@ -371,14 +371,14 @@ Method + url 定义方式
 ### JWT 登录
 - http 是无状态的 每次访问都是一样的，基于请求相应的 简单协议
 - Cookie 老派做法
-- Authorization token 身份令牌
+- Authorization token 身份令牌 
 - 颁发令牌 token 
 - jwt 
   pnpm i json(用户身份对象)web(形式)token(令牌) 
-  用户名 + 密码 {id:1, name:'admin'} json 加密成为一个token 比较安全
-  请求时，带上token发送，在服务器端 decode 得到用户对象，完成用户鉴权
-  - sign 方法 颁发令牌 (用户对象,secret,过期时间)
-  - decode 方法 解析请求头之中的 authorization 字段，获取令牌，得到用户对象，验证登录状态
+  用户名 + 密码 {id:1, name:'admin'} json 加密成为一个token 比较安全 
+  请求时，带上token发送，在服务器端 decode 得到用户对象，完成用户鉴权 
+  - sign 方法 颁发令牌 (用户对象,secret,过期时间) 
+  - decode 方法 解析请求头之中的 authorization 字段，获取令牌，得到用户对象，验证登录状态 
 
 ### api axios拦截器
 - 可以全局配置
@@ -404,7 +404,7 @@ psql/mysql sql比较专业，使用prisma 翻译官 对象关系映射
 User(service class)      ====     User(table) 
 create           =====            Insert
 findMany         =====            Select
-### ORM Object-Relational Mapping 对象关系映射
+### ORM Object-Relational Mapping 对象关系映射 
 安装 prisma 
 - pnpm i prisma@6.19.2 稳定
 - pnpm i @prisma/client@6.19.2  客户端库
@@ -613,7 +613,7 @@ INSERT INTO "avatars" ("id", "mimetype", "filename", "size", "userId") VALUES (1
 - 登录 
   JWT Authorization 字段 axios 请求拦截 
   cookie 之前的登录解决方案，小饼干 http 自动带上cookie,比 localStorage 更安全 更小的本地存储，存储身份信息 
-- JSON jwt 用户身份规范
+- JSON jwt 用户身份规范 
   轻量级 跨域 (用户对象信息) 直接给不安全 
   在Web端使用的  Token (hash 令牌) 双向解密 (sign,decode  secret) 
   本质就是做 身份验证 共享用户对象信息

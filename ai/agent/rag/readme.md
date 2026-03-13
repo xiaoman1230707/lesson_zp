@@ -8,8 +8,8 @@
 - rag 可以解决llm的幻觉 
   - llm thinking plaing
   - 检索增强
-  - Augument Prompt
-  - 如果没有匹配到？不知道
+  - Augument Prompt 
+  - 如果没有匹配到？不知道 
 
 ## RAG
 

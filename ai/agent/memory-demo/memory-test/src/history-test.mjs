@@ -4,7 +4,7 @@ import { InMemoryChatMessageHistory } from '@langchain/core/chat_history';
 import { SystemMessage, HumanMessage } from '@langchain/core/messages';
 
 const model = new ChatOpenAI({
-    modelName: process.env.MODEL_NAME,
+    modelName: process.env.OPENAI_MODEL_NAME,
     apiKey: process.env.OPENAI_API_KEY,
     temperature: 0,
     configuration: {
