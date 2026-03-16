@@ -46,7 +46,7 @@ async function main(){
             console.log('Collection already loaded');
             
         }
-        const query = '段正淳和谁有过暧昧？';
+        const query = '段誉会什么武功？';
         const queryVector = await getEmbedding(query);
         const searchResult =await client.search({
             collection_name: COLLECTION_NAME,
