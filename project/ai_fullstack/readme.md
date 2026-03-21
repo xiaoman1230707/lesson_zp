@@ -159,7 +159,6 @@ D Durability 持久性
 包含 id，name，password 三个字段。id自增，主键。name 不能重复
 请给出建表sql
 ```
-
 CREATE TABLE users (
     -- 使用 BIGINT 避免未来数据量过大导致 ID 溢出，IDENTITY 是 SQL 标准自增方式
     -- INT(上限21亿) BIGINT（8字节）
@@ -242,7 +241,7 @@ Method + url 定义方式
 - resolve 
   alias 路径别名
   @ -> __dirname/src  使用@就会直接来到项目根目录下 十分方便
-  npm i -D @types/node  node来到ts开发后
+  pnpm i -D @types/node  node来到ts开发后
   必须要单独安装 node的类型声明文件 
 
 - ts配置文件
