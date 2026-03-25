@@ -119,7 +119,7 @@ async function main() {
             console.log('Collection not loaded');
         }
 
-        const answer = await answerEbookQuestion("谈谈萧峰的苦闷",6);
+        const answer = await answerEbookQuestion("萧峰的苦闷",6);
         console.log(answer);
         
     } catch(err) {

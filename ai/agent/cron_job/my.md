@@ -72,4 +72,3 @@ $$fullAIMessage.content = fullAIMessage.content + chunk.content$$
 - 你的代码目前处理得很好：在它还没决定调工具前，文字会流式出来。
 - 一旦它决定调工具，文字流会停止，代码转入后台执行工具逻辑。
 
-你想了解如果 AI 同时调用**多个工具**（并行调用），这个 `concat` 逻辑是如何通过 `index` 区分不同工具碎片的吗？

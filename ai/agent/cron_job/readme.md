@@ -71,3 +71,6 @@
 
 ## 深化Tool
 
+- query_user
+  把tool作为provide在module 里声明，和原有的service解耦
+  再使用依赖注入的方式注入module.bindTools() 
