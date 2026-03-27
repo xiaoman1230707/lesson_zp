@@ -3,10 +3,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AiModule } from './ai/ai.module';
 import {
-  ConfigModule
+  ConfigModule,
+  ConfigService
 } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [AiModule,
@@ -17,6 +19,24 @@ import { join } from 'path';
     // 启动静态服务器
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..','public'),
+    }),
+    // 邮件服务 异步 dotenv读取之后 
+    MailerModule.forRootAsync({
+        inject: [ConfigService],
+        useFactory:(ConfigService:ConfigService)=>({
+            transport:{
+                host: ConfigService.get('MAIL_HOST'),
+                port:Number(ConfigService.get('MAIL_PORT')),
+                secure: ConfigService.get<string>('MAIL_SECURE') === "true",
+                auth: {
+                    user: ConfigService.get<string>('MAIL_USER'),
+                    pass: ConfigService.get<string>('MAIL_PASS'),
+                },
+                default:{
+                    from: ConfigService.get<string>('MAIL_FROM'),
+                }
+            }
+        })
     })
   ],
   controllers: [AppController],

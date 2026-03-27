@@ -16,7 +16,7 @@ const createStore = (createState) => {
         if(!Object.is(state,nextState)){// 值相等则不进入函数
             let prestate = state;
             if(!replace){
-                state = typeof nextState !== 'object' ? partial : Object.assign({}, state, nextState);
+                state = typeof nextState !== 'object' ? nextState : Object.assign({}, state, nextState);
             }else {
                 state = nextState;
             }

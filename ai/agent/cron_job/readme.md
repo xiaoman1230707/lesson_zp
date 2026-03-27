@@ -74,3 +74,10 @@
 - query_user
   把tool作为provide在module 里声明，和原有的service解耦
   再使用依赖注入的方式注入module.bindTools() 
+
+## 邮件tool 
+- 邮件服务
+  服务器 提供http服务 (web server 3000|nginx 80 代理)，也提供邮件服务，数据库服务(3306) 监听在不同的端口上 
+  pnpm i nodemailer(邮件npm) @nestjs-modules/mailer(nest接入nodemailer，生态很好) 
+  - 发送的内容是邮件，不是text/html 
+  - 传输？ 不用http，qq邮箱提供的SMTP服务 408 
