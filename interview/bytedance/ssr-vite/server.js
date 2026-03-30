@@ -32,11 +32,19 @@ async function start(){
                 path.resolve(__dirname,'./index.html'),
                 'utf-8'
             );
-            const { render } = await vite.transformIndexHtml(req.url,template);
-            // console.log(template);
-            res.status(200).set({"Content-Type":"text/html"}).end(template);
+            // 让vite 接管html
+            // 处理html模版 返回处理后的html字符串
+            template = await vite.transformIndexHtml(req.url,template);
+            console.log(template,'///');
+            // ssrLoadModule 加载服务端入口文件，返回对象中的render函数
+            const {render } = await vite.ssrLoadModule("./src/entry-server.jsx");
+            // react在服务器端将组件和数据渲染为完整的html字符串
+            const appHtml = await render();
+            // 替换html模版中的占位符
+            const html = template.replace('<!-- app-html -->',appHtml);
+            res.status(200).set({"Content-Type":"text/html"}).end(html);
         }catch(err){
-            console.log(err);
+            res.status(500).end(err.message);
         }
     })
 }

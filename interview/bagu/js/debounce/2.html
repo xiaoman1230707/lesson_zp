@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function debounce(
+            func,
+            delay,
+            leading=false,// 是否立即执行一次
+            trailing=true// 是否在delay时间后执行 
+    ){
+            let timer = null;
+            let isinvoked = false;// 是否执行过 
+
+            const debounced = function(...args){
+                return new Promise((resolve,reject)=>{
+                    clearTimeout(timer);
+                    if(leading && !isinvoked){
+                        try{
+                            const result = func.apply(this,args);
+                            resolve(result);
+                            isinvoked = true;
+                        }catch(err){
+                            reject(err);
+                        }
+                        if(!trailing) return;
+                    }
+                    timer = setTimeout(()=>{
+                        try{
+                            isinvoked = true;
+                            if(trailing){
+                                const result = func.apply(this,args);
+                                resolve(result);
+                            }
+                        }catch(err){
+                            reject(err);
+                        }
+                    })
+                })
+            };
+            // 函数也是对象
+            debounced.cancel = function(){
+                clearTimeout(timer);
+                // 清除后重新设置 
+                timer = null;
+                isinvoked = false;
+            }
+        }
+    </script>
+</body>
+</html>

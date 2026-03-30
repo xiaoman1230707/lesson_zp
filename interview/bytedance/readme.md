@@ -123,3 +123,31 @@ chat-app 聊天应用
 - 业务场景的选择
   CSR 适合做后台管理系统(自己人用，不需要seo)、强交互应用(canvas,工作流)、IOS/Android(原生做壳子，硬件支持 拍照 蓝牙 陀螺仪，性能要求极高，不用适配两套) 很多页面是用WebView (chrom 内核)
   移动端时代流量入口不再是百度等搜索引擎
+
+### 手写SSR
+- index.html
+  #root 用 <!-- app-html --> 注释 
+- express httpserver 董事长
+- vite 擅长react工程化 包工头 
+  fs.readFileSync(index.html)
+  vite.transformIndexHTML  
+  vite.ssrLoadModule()
+  调用render方法得到组件html字符串，替换注释标记 
+- react
+  服务器端运行 编写各个组件
+- react-dom
+  react-dom/server renderToString 方法 把组件渲染为字符串
+  react-dom/client hydrateRoot 方法 水合渲染
+- App.jsx 组件本身 
+- entry-client.jsx 
+  调用react-dom/client hydrateRoot 方法 水合渲染
+  将服务器返回的静态页面变成动态的可交互的页面
+- entry-server.jsx 
+  提供render方法 给server.js 调用
+  不会执行时间监听等前端任务
+
+- 水合就是浏览器把服务端生成的HTML“接管”过来，
+  React再跑一遍对比结构，不重建DOM，只绑定事件和状态，让页面变成可交互。 
+  发生在浏览器,浏览器并行下载 `<script>` 标签指向的 React 代码。执行水合
+
+- SSR开发框架 next.js 
